@@ -1,2 +1,11 @@
 @import "tailwindcss";
 
+body {
+  font-family: "Cormorant Garamond", serif;
+}
+
+nav ul li {
+  font-size: 15px;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
