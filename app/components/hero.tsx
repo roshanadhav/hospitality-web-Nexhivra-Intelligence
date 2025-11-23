@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
 export default function Hero() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -64,7 +63,7 @@ export default function Hero() {
 
       {/* Background Video */}
       <video
-        className="absolute top-0 left-0 w-full h-full object-cover object-center"
+        className="fixed  top-0 left-0 w-full h-full object-cover object-center"
         autoPlay
         loop
         muted
