@@ -1,9 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
+
 export default function Hero() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const router = useRouter();
 
   const menuItems = [
     "Projects",
@@ -20,7 +24,7 @@ export default function Hero() {
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
-      {/* ------------------ MINIMAL GOLD LINE LUXURY LOADER ------------------ */}
+      {/* ------------------ LOADER ------------------ */}
       <AnimatePresence>
         {loading && (
           <motion.div
@@ -29,7 +33,6 @@ export default function Hero() {
             exit={{ opacity: 0, transition: { duration: 1 } }}
             className="fixed inset-0 bg-black z-[999] flex flex-col items-center justify-center"
           >
-            {/* Gold Thin Line Loader */}
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: "200px" }}
@@ -39,15 +42,12 @@ export default function Hero() {
                 repeat: Infinity,
                 repeatType: "reverse",
               }}
-              className="h-[2px] bg-[#d4af37] rounded-full shadow-[0_0_18px_#d4af37]"
+              className="h-[2px] bg-[#d4af37] rounded-full"
             />
-
-            {/* Subtle Fade Text */}
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{
-                delay: 0.2,
                 duration: 1.5,
                 repeat: Infinity,
                 repeatType: "reverse",
@@ -59,11 +59,10 @@ export default function Hero() {
           </motion.div>
         )}
       </AnimatePresence>
-      {/* -------------------------------------------------------------- */}
 
       {/* Background Video */}
       <video
-        className="fixed  top-0 left-0 w-full h-full object-cover object-center"
+        className="fixed top-0 left-0 w-full h-full object-cover object-center"
         autoPlay
         loop
         muted
@@ -72,30 +71,36 @@ export default function Hero() {
         <source src="/videos/luxury.mp4" type="video/mp4" />
       </video>
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/50" />
+      {/* Light 0.1 overlay */}
+      <div className="absolute inset-0 bg-black/10 z-[1]" />
 
       {/* NAVBAR */}
       <nav className="absolute top-0 left-0 w-full z-30">
         <div className="flex justify-between items-center px-6 md:px-14 py-6 md:py-8">
-          <h1 className="text-white text-2xl md:text-3xl tracking-[0.35em] font-light">
-            ROYAL 
+
+          {/* Logo */}
+          <h1
+            onClick={() => router.push("/")}
+            className="text-white text-2xl md:text-3xl tracking-[0.45em] font-light font-luxury cursor-pointer"
+          >
+            ROYAL
           </h1>
 
           {/* Desktop Menu */}
-          <ul className="hidden md:flex gap-12 lg:gap-16 text-white tracking-[0.25em] text-xs lg:text-sm font-light">
+          <ul className="hidden md:flex gap-14 lg:gap-18 text-white tracking-[0.2em] text-xs lg:text-sm font-light font-luxury">
             {menuItems.map((item) => (
               <li
                 key={item}
+                onClick={() => router.push(`${item.toLowerCase()}`)}
                 className="relative group cursor-pointer transition"
               >
                 {item}
-                <span className="absolute bottom-[-4px] left-0 w-0 h-[1px] bg-white/70 group-hover:w-full transition-all duration-300"></span>
+                <span className="absolute bottom-[-4px] left-0 w-0 h-[1px] bg-white/70 group-hover:w-full transition-all duration-300" />
               </li>
             ))}
           </ul>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Icon */}
           <button
             className="md:hidden text-white text-4xl leading-none"
             onClick={() => setMenuOpen(true)}
@@ -108,7 +113,7 @@ export default function Hero() {
         </div>
       </nav>
 
-      {/* MOBILE SLIDE MENU */}
+      {/* MOBILE MENU */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -116,10 +121,8 @@ export default function Hero() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="fixed top-0 right-0 h-full w-[70%] sm:w-[55%] bg-black/30 backdrop-blur-xl 
-                       z-40 p-10 flex flex-col"
+            className="fixed top-0 right-0 h-full w-[70%] sm:w-[55%] bg-black/30 backdrop-blur-xl z-40 p-10 flex flex-col"
           >
-            {/* Close Button */}
             <button
               onClick={() => setMenuOpen(false)}
               className="text-white text-4xl self-end mb-10"
@@ -127,10 +130,16 @@ export default function Hero() {
               ×
             </button>
 
-            {/* Mobile Items */}
             <ul className="flex flex-col gap-6 text-white tracking-[0.3em] text-base font-light">
               {menuItems.map((item) => (
-                <li key={item} className="opacity-90 hover:opacity-100">
+                <li
+                  key={item}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    router.push("/click");
+                  }}
+                  className="opacity-90 hover:opacity-100 cursor-pointer"
+                >
                   {item}
                 </li>
               ))}
@@ -139,14 +148,15 @@ export default function Hero() {
         )}
       </AnimatePresence>
 
-      {/* HERO CONTENT */}
+      {/* HERO TEXT */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-4">
         {!loading && (
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2 }}
-            className="text-white font-light tracking-[0.4em] text-4xl sm:text-5xl md:text-6xl"
+            className="text-white font-light tracking-[0.4em]
+                       text-2xl sm:text-3xl md:text-5xl lg:text-6xl"
           >
             EXPERIENCE LUXURY
           </motion.h1>

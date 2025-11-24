@@ -9,3 +9,7 @@ nav ul li {
   letter-spacing: 1px;
   cursor: pointer;
 }
+
+.font-luxury {
+  font-family: 'Playfair Display', serif;
+}
