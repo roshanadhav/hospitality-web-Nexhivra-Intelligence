@@ -32,66 +32,97 @@ const projects: Project[] = [
     bg: "/images/bg2.jpg",
     overlays: ["/images/over21.jpg", "/images/over22.jpg", "/images/over23.jpg", "/images/over24.jpg"],
   },
- 
 ];
 
 export default function FullscreenProjectShowcase() {
   return (
-    <div className="relative w-full h-screen overflow-y-scroll snap-y snap-mandatory no-scrollbar">
+    <section className="relative z-[20] w-full h-screen no-scrollbar overflow-y-scroll snap-y snap-mandatory scroll-smooth transition-colors duration-1000">
       {projects.map((project) => (
-        <section
-          key={project.id}
-          className="relative w-full min-h-screen snap-start"
-        >
-          {/* Fixed Background Per Project */}
+        <section key={project.id} className="relative w-full min-h-screen snap-center">
+
+          {/* Fixed Background with Luxury Shadow Overlay */}
           <div className="absolute inset-0 -z-10">
             <div
-              className="w-full h-full bg-cover bg-center bg-fixed"
+              className="w-full h-full bg-cover bg-center bg-fixed relative"
               style={{ backgroundImage: `url(${project.bg})` }}
-            ></div>
+            >
+              {/* ✨ Luxury Gradient Overlay (for text visibility) */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/20"></div>
+            </div>
           </div>
 
-          {/* Main Project Title */}
+          {/* Main Project Title Section */}
           <div className="h-screen flex flex-col items-center justify-center text-center px-6">
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.9 }}
               className="text-5xl md:text-7xl font-light tracking-[0.3em] text-white drop-shadow-xl"
             >
               {project.title}
             </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.15 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.9, delay: 0.15 }}
               className="text-xl md:text-2xl max-w-2xl text-white/90 mt-6"
             >
               {project.description}
             </motion.p>
           </div>
 
-          {/* Overlay Images */}
+          {/* Overlays */}
           {project.overlays.map((img, index) => (
             <div
               key={index}
-              className="h-screen w-full flex items-center justify-center snap-start"
+              className="relative min-h-screen w-full flex items-center no-scrollbar justify-center snap-center"
             >
-              <motion.img
-                src={img}
-                initial={{ opacity: 0, scale: 1.05 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
-                className="w-[70%] md:w-[45%] rounded-2xl shadow-2xl object-cover"
-              />
+              {/* Project Label + Button */}
+              <div className="absolute left-10 bottom-10 text-white z-20">
+                <motion.h2
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.6 }}
+                  transition={{ duration: 0.7 }}
+                  className="text-2xl md:text-3xl font-light tracking-[0.15em]"
+                >
+                  {project.title}
+                </motion.h2>
+
+                <motion.a
+                  href={`/projects/${project.id}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.6 }}
+                  transition={{ duration: 0.7, delay: 0.08 }}
+                  className="inline-block mt-4 px-6 py-2 border border-white/70 text-white uppercase text-xs tracking-widest hover:border-white transition-all duration-300 bg-transparent"
+                >
+                  View Project
+                </motion.a>
+              </div>
+
+              {/* Overlay Image */}
+              <motion.div
+                initial={{ opacity: 0, y: 60, scale: 1.08 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, amount: 0.65 }}
+                transition={{ duration: 0.95, ease: [0.2, 0.8, 0.2, 1] }}
+                className="flex items-center justify-center w-full px-6 min-h-screen"
+              >
+                <img
+                  src={img}
+                  alt={`${project.title} overlay ${index + 1}`}
+                  className="w-full max-w-[86%] md:max-w-[62%] lg:max-w-[55%] max-h-[80vh] rounded-2xl shadow-2xl object-contain block mx-auto"
+                  style={{ transformOrigin: "center center" }}
+                />
+              </motion.div>
             </div>
           ))}
         </section>
       ))}
-    </div>
+    </section>
   );
 }

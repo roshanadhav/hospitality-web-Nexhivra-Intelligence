@@ -21,6 +21,7 @@ export default function LuxuryShowcase() {
   // Refined custom ease for a smoother, more 'luxurious' deceleration
   const smoothEase = cubicBezier(0.18, 0.95, 0.2, 1); 
   const GOLD = "#c8b27c";
+  const GOLD2 =" hsla(265, 58%, 68%, 1.00)c";
 
   // For background + text color change
   const containerRef = useRef(null);
@@ -30,7 +31,7 @@ export default function LuxuryShowcase() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         // Detect when less than 10% is visible before leaving the viewport
-        if (entry.intersectionRatio < 0.1) {
+        if (entry.intersectionRatio < 0.2) {
           setIsLeaving(true);
         } else {
           setIsLeaving(false);
@@ -60,7 +61,7 @@ export default function LuxuryShowcase() {
       ref={containerRef}
       className={`relative z-[20] w-full py-24 lg:py-40 overflow-hidden transition-colors duration-1000 ${
         isLeaving 
-          ? "bg-[#1a1a1a]"  // Brighter shade
+          ? "bg-[#f8f5f0]"  // Brighter shade
           : "bg-[#070708]"  // Original luxury black
       }`}
     >
