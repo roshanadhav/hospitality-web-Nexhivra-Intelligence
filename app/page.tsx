@@ -9,7 +9,7 @@ function page() {
       <Hero />
       <WhoWeAre />
       <FullscreenProjectShowcase/>
-      <LuxuryFooter />
+      {/* <LuxuryFooter /> */}
     </div>
   )
 }
