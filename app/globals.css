@@ -13,3 +13,12 @@ nav ul li {
 .font-luxury {
   font-family: 'Playfair Display', serif;
 }
+
+/* Hide scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
