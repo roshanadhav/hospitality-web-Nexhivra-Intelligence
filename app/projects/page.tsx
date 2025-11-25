@@ -1,9 +1,9 @@
 import React from 'react'
-
+import LuxuryProjectShowcase from '../components/showallprojects'
 function page() {
   return (
     <div>
-      Projects page
+      <LuxuryProjectShowcase />
     </div>
   )
 }

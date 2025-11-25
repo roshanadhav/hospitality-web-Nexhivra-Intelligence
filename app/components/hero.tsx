@@ -136,7 +136,7 @@ export default function Hero() {
                   key={item}
                   onClick={() => {
                     setMenuOpen(false);
-                    router.push("/click");
+                    router.push(`${item.toLowerCase()}`);
                   }}
                   className="opacity-90 hover:opacity-100 cursor-pointer"
                 >
