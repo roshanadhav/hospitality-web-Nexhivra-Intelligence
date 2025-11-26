@@ -36,22 +36,22 @@ const projects: Project[] = [
 
 export default function FullscreenProjectShowcase() {
   return (
-    <section className="relative z-[20] w-full h-screen no-scrollbar overflow-y-scroll snap-y snap-mandatory scroll-smooth transition-colors duration-1000">
-      {projects.map((project) => (
-        <section key={project.id} className="relative w-full min-h-screen snap-center">
+    <section className="relative z-[20] w-full h-screen overflow-y-scroll no-scrollbar snap-y snap-mandatory scroll-smooth [scroll-behavior:smooth]">
 
-          {/* Fixed Background with Luxury Shadow Overlay */}
+      {projects.map((project) => (
+        <section key={project.id} className="relative w-full min-h-screen snap-start">
+
+          {/* FIXED BACKGROUND */}
           <div className="absolute inset-0 -z-10">
             <div
               className="w-full h-full bg-cover bg-center bg-fixed relative"
               style={{ backgroundImage: `url(${project.bg})` }}
             >
-              {/* ✨ Luxury Gradient Overlay (for text visibility) */}
               <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/20"></div>
             </div>
           </div>
 
-          {/* Main Project Title Section */}
+          {/* MAIN TITLE */}
           <div className="h-screen flex flex-col items-center justify-center text-center px-6">
             <motion.h1
               initial={{ opacity: 0, y: 40 }}
@@ -74,13 +74,13 @@ export default function FullscreenProjectShowcase() {
             </motion.p>
           </div>
 
-          {/* Overlays */}
+          {/* OVERLAY IMAGES */}
           {project.overlays.map((img, index) => (
             <div
               key={index}
-              className="relative min-h-screen w-full flex items-center no-scrollbar justify-center snap-center"
+              className="relative min-h-screen w-full flex items-center justify-center snap-start no-scrollbar"
             >
-              {/* Project Label + Button */}
+              {/* LABEL + BTN */}
               <div className="absolute left-10 bottom-10 text-white z-20">
                 <motion.h2
                   initial={{ opacity: 0, y: 20 }}
@@ -104,25 +104,19 @@ export default function FullscreenProjectShowcase() {
                 </motion.a>
               </div>
 
-              {/* Overlay Image */}
-              <motion.div
-                initial={{ opacity: 0, y: 60, scale: 1.08 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, amount: 0.65 }}
-                transition={{ duration: 0.95, ease: [0.2, 0.8, 0.2, 1] }}
-                className="flex items-center justify-center w-full px-6 min-h-screen"
-              >
+              {/* OVERLAY IMAGE — NO ANIMATION, CENTERED */}
+              <div className="flex items-center justify-center w-full px-6 min-h-screen">
                 <img
                   src={img}
                   alt={`${project.title} overlay ${index + 1}`}
-                  className="w-full max-w-[86%] md:max-w-[62%] lg:max-w-[55%] max-h-[80vh] rounded-2xl shadow-2xl object-contain block mx-auto"
-                  style={{ transformOrigin: "center center" }}
+                  className="w-full max-w-[86%] md:max-w-[62%] lg:max-w-[55%] max-h-[80vh] rounded-2xl shadow-2xl object-contain mx-auto"
                 />
-              </motion.div>
+              </div>
             </div>
           ))}
         </section>
       ))}
+
     </section>
   );
 }
