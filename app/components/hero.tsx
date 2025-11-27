@@ -8,7 +8,6 @@ import Image from "next/image";
 export default function Hero() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [videoLoaded, setVideoLoaded] = useState(false);
   const [headingVisible, setHeadingVisible] = useState(true);
 
   const router = useRouter();
@@ -73,19 +72,16 @@ export default function Hero() {
         )}
       </AnimatePresence>
 
-     
-
       {/* ------------------ BACKGROUND VIDEO ------------------ */}
       <video
-        className={`fixed top-0 left-0 w-full h-full object-cover object-center z-0 transition-opacity duration-1000 ${
-          videoLoaded ? "opacity-100" : "opacity-0"
-        }`}
+        className={`fixed top-0 left-0 w-full h-full object-cover object-center z-0 transition-opacity duration-1000 
+          opacity-100
+        `}
         autoPlay
         loop
         muted
         playsInline
         preload="none"
-        onCanPlayThrough={() => setVideoLoaded(true)}
       >
         <source src="/videos/luxury.mp4" type="video/mp4" />
       </video>
