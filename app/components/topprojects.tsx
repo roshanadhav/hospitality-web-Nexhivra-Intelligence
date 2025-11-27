@@ -16,21 +16,24 @@ const projects: Project[] = [
     title: "Luxe Horizon ",
     description: "A symphony of shadows, textures, and timeless materials.",
     bg: "/images/bg1.jpg",
-    overlays: ["/images/over1.jpg", "/images/over2.jpg", "/images/over3.jpg", "/images/over4.jpg"],
+    overlays: ["/images/over1.jpg", "/images/over4.jpg"],
+    //, "/images/over2.jpg", "/images/over3.jpg"
   },
   {
     id: 2,
     title: "Celestial Manor",
     description: "Where minimalism meets warm immersive luxury.",
     bg: "/images/bg5.jpg",
-    overlays: ["/images/over51.jpg", "/images/over52.jpg", "/images/over53.jpg", "/images/over54.jpg"],
+    overlays: ["/images/over51.jpg" , "/images/over54.jpg"],
+    //, "/images/over52.jpg", "/images/over53.jpg",
   },
   {
     id: 3,
     title: "Opulent Wave Villa",
     description: "Crafted for connoisseurs of immersive spaces.",
     bg: "/images/bg2.jpg",
-    overlays: ["/images/over21.jpg", "/images/over22.jpg", "/images/over23.jpg", "/images/over24.jpg"],
+    overlays: ["/images/over21.jpg" , "/images/over24.jpg"],
+    //, "/images/over22.jpg", "/images/over23.jpg",
   },
 ];
 

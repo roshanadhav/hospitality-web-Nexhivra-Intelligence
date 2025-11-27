@@ -46,29 +46,30 @@ const projects: Project[] = [
 export default function FullscreenProjectShowcase() {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
-
   const swiperRefs = useRef<Array<SwiperClass | null>>(Array(projects.length).fill(null));
-
   const menuItems = ["Projects", "Expertise", "Practice", "Studios", "Specialists"];
 
   return (
     <section className="relative z-[20] w-full h-screen no-scrollbar overflow-y-scroll snap-y scroll-smooth snap-mandatory">
       {projects.map((project, pIndex) => (
         <section key={project.id} className="relative w-full min-h-screen snap-center">
-          {/* -------------------- NAVBAR (only for first project, same as HERO) -------------------- */}
+          {/* -------------------- NAVBAR -------------------- */}
           {pIndex === 0 && (
-            <nav className="absolute top-0 left-0 w-full z-30 font-luxury">
+            <nav className="absolute top-0 left-0 w-full z-30">
               <div className="flex justify-between items-center px-6 md:px-14 py-6 md:py-8">
-                {/* Logo */}
                 <h1
                   onClick={() => router.push("/")}
-                  className="text-white text-2xl md:text-3xl tracking-[0.45em] font-light cursor-pointer z-40"
+                  className="text-white text-2xl md:text-3xl tracking-[0.35em] font-light cursor-pointer"
+                  style={{ fontFamily: "var(--font-playfair)" }}
                 >
                   ROYAL
                 </h1>
 
                 {/* Desktop Menu */}
-                <ul className="hidden md:flex gap-14 lg:gap-18 text-white tracking-[0.2em] text-xs lg:text-sm font-light">
+                <ul
+                  className="hidden md:flex gap-14 lg:gap-18 text-white tracking-[0.15em] text-xs lg:text-sm font-light"
+                  style={{ fontFamily: "Raleway, sans-serif" }}
+                >
                   {menuItems.map((item) => (
                     <li
                       key={item}
@@ -81,9 +82,9 @@ export default function FullscreenProjectShowcase() {
                   ))}
                 </ul>
 
-                {/* Mobile Menu Icon - visible on small screens */}
+                {/* Mobile Menu Icon */}
                 <button
-                  className="md:hidden text-white text-4xl leading-none z-40"
+                  className="md:hidden text-white text-4xl leading-none"
                   onClick={() => setMenuOpen(true)}
                   aria-label="Open menu"
                 >
@@ -94,7 +95,7 @@ export default function FullscreenProjectShowcase() {
                 </button>
               </div>
 
-              {/* MOBILE MENU (slide-in) */}
+              {/* MOBILE MENU */}
               <AnimatePresence>
                 {menuOpen && (
                   <motion.div
@@ -103,6 +104,7 @@ export default function FullscreenProjectShowcase() {
                     exit={{ x: "100%" }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
                     className="fixed top-0 right-0 h-full w-[70%] sm:w-[55%] bg-black/30 backdrop-blur-xl z-40 p-10 flex flex-col"
+                    style={{ fontFamily: "Raleway, sans-serif" }}
                   >
                     <button
                       onClick={() => setMenuOpen(false)}
@@ -112,7 +114,7 @@ export default function FullscreenProjectShowcase() {
                       ×
                     </button>
 
-                    <ul className="flex flex-col gap-6 text-white tracking-[0.3em] text-base font-light">
+                    <ul className="flex flex-col gap-6 text-white tracking-[0.15em] text-base font-light">
                       {menuItems.map((item) => (
                         <li
                           key={item}
@@ -132,7 +134,7 @@ export default function FullscreenProjectShowcase() {
             </nav>
           )}
 
-          {/* Background */}
+          {/* -------------------- BACKGROUND -------------------- */}
           <div className="absolute inset-0 -z-10">
             <div
               className="w-full h-full bg-cover bg-center bg-fixed relative"
@@ -142,14 +144,15 @@ export default function FullscreenProjectShowcase() {
             </div>
           </div>
 
-          {/* Title & Description (center) */}
+          {/* -------------------- TITLE & DESCRIPTION -------------------- */}
           <div className="h-screen flex flex-col items-center justify-center text-center px-6 z-10 relative">
             <motion.h1
               initial={{ opacity: 0, y: 35 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.6 }}
               transition={{ duration: 0.9 }}
-              className="text-5xl md:text-7xl font-light tracking-[0.3em] text-white drop-shadow-xl"
+              className="text-4xl md:text-6xl font-light tracking-[0.15em] text-white drop-shadow-xl"
+              style={{ fontFamily: "var(--font-playfair)" }}
             >
               {project.title}
             </motion.h1>
@@ -159,34 +162,35 @@ export default function FullscreenProjectShowcase() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.6 }}
               transition={{ duration: 0.9, delay: 0.2 }}
-              className="text-xl md:text-2xl max-w-2xl text-white/90 mt-6"
+              className="text-lg md:text-xl max-w-2xl text-white/90 mt-4"
+              style={{ fontFamily: "Raleway, sans-serif" }}
             >
               {project.description}
             </motion.p>
           </div>
 
-          {/* SWIPER SECTION */}
+          {/* -------------------- SWIPER -------------------- */}
           <div className="relative w-full h-screen snap-center flex items-center justify-center px-6">
-            {/* Title & View Project Button (fixed on bottom-left) */}
             <div className="absolute left-10 bottom-10 text-white z-20">
               <motion.h2
                 initial={{ opacity: 0, x: -40 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.7 }}
                 className="text-2xl md:text-3xl font-light tracking-[0.15em]"
+                style={{ fontFamily: "var(--font-playfair)" }}
               >
                 {project.title}
               </motion.h2>
 
               <a
                 href={`/projects/${project.id}`}
-                className="inline-block mt-4 px-6 py-2 border border-white/70 text-white uppercase text-xs tracking-widest hover:border-white transition-all duration-300"
+                className="inline-block mt-4 px-6 py-2 border border-white/70 text-white uppercase text-xs tracking-[0.1em] hover:border-white transition-all duration-300"
+                style={{ fontFamily: "Raleway, sans-serif" }}
               >
                 View Project
               </a>
             </div>
 
-            {/* Swiper Container - ADDED 'relative' to make buttons positioned correctly */}
             <div className="relative w-full max-w-[900px]">
               <Swiper
                 modules={[Navigation, Keyboard, Pagination]}
@@ -195,7 +199,6 @@ export default function FullscreenProjectShowcase() {
                 spaceBetween={40}
                 slidesPerView={1}
                 onSwiper={(swiper) => (swiperRefs.current[pIndex] = swiper)}
-                // ADDED 'relative' and 'z-10' class to allow buttons to overlay the slides
                 className="w-full relative z-10"
               >
                 {project.overlays.map((img, idx) => (
@@ -208,23 +211,17 @@ export default function FullscreenProjectShowcase() {
                 ))}
               </Swiper>
 
-              {/* Prev Button - Adjusted positioning to be inside the relative container and near the edge of the SwiperSlide area */}
               <button
                 onClick={() => swiperRefs.current[pIndex]?.slidePrev()}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-white 
-                bg-black/30 hover:bg-black/50 backdrop-blur-sm 
-                p-3 rounded-full transition-all duration-300 z-20" 
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-white bg-black/30 hover:bg-black/50 backdrop-blur-sm p-3 rounded-full transition-all duration-300 z-20"
                 aria-label="Previous slide"
               >
                 ←
               </button>
 
-              {/* Next Button - Adjusted positioning to be inside the relative container and near the edge of the SwiperSlide area */}
               <button
                 onClick={() => swiperRefs.current[pIndex]?.slideNext()}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-white 
-                bg-black/30 hover:bg-black/50 backdrop-blur-sm 
-                p-3 rounded-full transition-all duration-300 z-20" 
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-white bg-black/30 hover:bg-black/50 backdrop-blur-sm p-3 rounded-full transition-all duration-300 z-20"
                 aria-label="Next slide"
               >
                 →

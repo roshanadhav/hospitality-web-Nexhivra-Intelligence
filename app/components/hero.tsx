@@ -1,11 +1,15 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function Hero() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [headingVisible, setHeadingVisible] = useState(true);
 
   const router = useRouter();
 
@@ -17,10 +21,19 @@ export default function Hero() {
     "Specialists",
   ];
 
+  // Loader timeout
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 2200);
+    const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
+
+  // Heading disappear timeout
+  useEffect(() => {
+    if (!loading) {
+      const timer = setTimeout(() => setHeadingVisible(false), 4000); // heading disappears after 4s
+      return () => clearTimeout(timer);
+    }
+  }, [loading]);
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
@@ -31,7 +44,7 @@ export default function Hero() {
             initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 1 } }}
-            className="fixed inset-0 bg-black z-[999] flex flex-col items-center justify-center"
+            className="fixed inset-0 bg-black z-[999] flex flex-col items-center justify-center pointer-events-none"
           >
             <motion.div
               initial={{ width: 0 }}
@@ -52,7 +65,7 @@ export default function Hero() {
                 repeat: Infinity,
                 repeatType: "reverse",
               }}
-              className="mt-6 text-[#d4af37] tracking-[0.25em] text-sm sm:text-base"
+              className="mt-6 text-[#d4af37] tracking-[0.25em] text-sm sm:text-base font-[var(--font-playfair)]"
             >
               LOADING LUXURY
             </motion.p>
@@ -60,34 +73,42 @@ export default function Hero() {
         )}
       </AnimatePresence>
 
-      {/* Background Video */}
+     
+
+      {/* ------------------ BACKGROUND VIDEO ------------------ */}
       <video
-        className="fixed top-0 left-0 w-full h-full object-cover object-center"
+        className={`fixed top-0 left-0 w-full h-full object-cover object-center z-0 transition-opacity duration-1000 ${
+          videoLoaded ? "opacity-100" : "opacity-0"
+        }`}
         autoPlay
         loop
         muted
         playsInline
+        preload="none"
+        onCanPlayThrough={() => setVideoLoaded(true)}
       >
         <source src="/videos/luxury.mp4" type="video/mp4" />
       </video>
 
-      {/* Light 0.1 overlay */}
+      {/* ------------------ LIGHT OVERLAY ------------------ */}
       <div className="absolute inset-0 bg-black/10 z-[1]" />
 
-      {/* NAVBAR */}
+      {/* ------------------ NAVBAR ------------------ */}
       <nav className="absolute top-0 left-0 w-full z-30">
         <div className="flex justify-between items-center px-6 md:px-14 py-6 md:py-8">
-
-          {/* Logo */}
           <h1
             onClick={() => router.push("/")}
-            className="text-white text-2xl md:text-3xl tracking-[0.45em] font-light font-luxury cursor-pointer"
+            className="text-white text-2xl md:text-3xl tracking-[0.45em] font-light cursor-pointer"
+            style={{ fontFamily: "var(--font-playfair)" }} // Luxury logo font
           >
             ROYAL
           </h1>
 
           {/* Desktop Menu */}
-          <ul className="hidden md:flex gap-14 lg:gap-18 text-white tracking-[0.2em] text-xs lg:text-sm font-light font-luxury">
+          <ul
+            className="hidden md:flex gap-14 lg:gap-18 text-white tracking-[0.2em] text-xs lg:text-sm font-light"
+            style={{ fontFamily: "Raleway, sans-serif" }} // Clean menu font
+          >
             {menuItems.map((item) => (
               <li
                 key={item}
@@ -113,7 +134,7 @@ export default function Hero() {
         </div>
       </nav>
 
-      {/* MOBILE MENU */}
+      {/* ------------------ MOBILE MENU ------------------ */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -122,6 +143,7 @@ export default function Hero() {
             exit={{ x: "100%" }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="fixed top-0 right-0 h-full w-[70%] sm:w-[55%] bg-black/30 backdrop-blur-xl z-40 p-10 flex flex-col"
+            style={{ fontFamily: "Raleway, sans-serif" }} // Mobile menu font
           >
             <button
               onClick={() => setMenuOpen(false)}
@@ -148,19 +170,22 @@ export default function Hero() {
         )}
       </AnimatePresence>
 
-      {/* HERO TEXT */}
+      {/* ------------------ HERO TEXT ------------------ */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-4">
-        {!loading && (
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2 }}
-            className="text-white font-light tracking-[0.4em]
-                       text-2xl sm:text-3xl md:text-5xl lg:text-6xl"
-          >
-            EXPERIENCE LUXURY
-          </motion.h1>
-        )}
+        <AnimatePresence>
+          {!loading && headingVisible && (
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 1.2 }}
+              className="text-white font-light tracking-[0.15em] text-xl sm:text-2xl md:text-3xl lg:text-4xl"
+              style={{ fontFamily: "var(--font-playfair)" }} // Hero text font
+            >
+              EXPERIENCE LUXURY WITH LEGACY
+            </motion.h1>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
